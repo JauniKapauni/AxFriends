@@ -1,0 +1,11 @@
+name: AxFriends
+description: $description
+prefix: AxFriends
+version: '${version}'
+
+main: de.jaunikapauni.axfriends.AxFriends
+api-version: '26.1.2'
+load: POSTWORLD
+
+authors: [ JauniKapauni ]
+website: https://github.com/JauniKapauni
