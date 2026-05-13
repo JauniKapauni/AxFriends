@@ -17,3 +17,6 @@ commands:
   listfriends:
     usage: /listfriends
     description: Command to see a list of all friends
+  removefriend:
+    usage: /removefriend
+    description: Command to remove a player as a friend
