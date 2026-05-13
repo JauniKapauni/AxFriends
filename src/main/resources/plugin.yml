@@ -20,3 +20,9 @@ commands:
   removefriend:
     usage: /removefriend
     description: Command to remove a player as a friend
+  acceptfriendrequest:
+    usage: /acceptfriendrequest
+    description: Command to accept a friend request
+  denyfriendrequest:
+    usage: /denyfriendrequest
+    description: Command to deny a friend request

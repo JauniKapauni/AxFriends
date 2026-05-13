@@ -18,7 +18,7 @@ public class PlayerManager {
 
     public boolean addFriend(Player sourcePlayer, Player targetPlayer){
         try(Connection conn = reference.getDatabaseManager().getConnection()){
-            try(PreparedStatement ps = conn.prepareStatement("INSERT INTO friends(player_one, player_two) VALUES (?, ?)")){
+            try(PreparedStatement ps = conn.prepareStatement("INSERT INTO friend_requests(sender, receiver) VALUES (?, ?)")){
                 ps.setString(1, sourcePlayer.getUniqueId().toString());
                 ps.setString(2, targetPlayer.getUniqueId().toString());
                 ps.executeUpdate();
@@ -52,10 +52,45 @@ public class PlayerManager {
                 ps.setString(1, sourcePlayer.getUniqueId().toString());
                 ps.setString(2, targetPlayer.getUniqueId().toString());
                 ps.executeUpdate();
+                ps.setString(1, targetPlayer.getUniqueId().toString());
+                ps.setString(2, sourcePlayer.getUniqueId().toString());
+                ps.executeUpdate();
                 return true;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public boolean acceptFriendRequest(Player sourcePlayer, Player targetPlayer){
+        try(Connection conn = reference.getDatabaseManager().getConnection()){
+            try(PreparedStatement ps1 = conn.prepareStatement("DELETE FROM friend_requests WHERE sender = ? AND receiver = ?")){
+                ps1.setString(1, targetPlayer.getUniqueId().toString());
+                ps1.setString(2, sourcePlayer.getUniqueId().toString());
+                ps1.executeUpdate();
+                try(PreparedStatement ps2 = conn.prepareStatement("INSERT INTO friends(player_one, player_two) VALUES (?, ?)")){
+                    ps2.setString(1, targetPlayer.getUniqueId().toString());
+                    ps2.setString(2, sourcePlayer.getUniqueId().toString());
+                    ps2.executeUpdate();
+                    ps2.setString(1, sourcePlayer.getUniqueId().toString());
+                    ps2.setString(2, targetPlayer.getUniqueId().toString());
+                    ps2.executeUpdate();
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean denyFriendRequest(Player sourcePlayer, Player targetPlayer) throws SQLException {
+        try(Connection conn = reference.getDatabaseManager().getConnection()){
+            try(PreparedStatement ps = conn.prepareStatement("DELETE FROM friend_requests WHERE sender = ? AND receiver = ?")){
+                ps.setString(1, targetPlayer.getUniqueId().toString());
+                ps.setString(2, sourcePlayer.getUniqueId().toString());
+                ps.executeUpdate();
+                return true;
+            }
         }
     }
 }

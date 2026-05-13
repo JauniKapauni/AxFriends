@@ -8,26 +8,33 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class AddFriendCommand implements CommandExecutor {
+import java.sql.SQLException;
+
+public class DenyFriendRequestCommand implements CommandExecutor {
     AxFriends reference;
-    public AddFriendCommand(AxFriends reference){
+    public DenyFriendRequestCommand(AxFriends reference){
         this.reference = reference;
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if(!(sender instanceof Player)){
             sender.sendMessage("Only players can run this command!");
-            return false;
+            return true;
         }
         Player sourcePlayer = (Player) sender;
         Player targetPlayer = Bukkit.getPlayer(args[0]);
-        boolean state = reference.getPlayerManager().addFriend(sourcePlayer, targetPlayer);
+        boolean state = false;
+        try {
+            state = reference.getPlayerManager().denyFriendRequest(sourcePlayer, targetPlayer);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         if(state){
-            sourcePlayer.sendMessage("You have sent " + targetPlayer.getName() + " a request to be your friend!");
-            targetPlayer.sendMessage("You got a friend request from " + sourcePlayer.getName());
+            targetPlayer.sendMessage(sourcePlayer.getName() + " has denied your friend request!");
+            sourcePlayer.sendMessage("You denied the friend request from " + targetPlayer.getName());
             return true;
         }
-        sourcePlayer.sendMessage("You are already friends with " + targetPlayer.getName());
+        sourcePlayer.sendMessage("There are no pending friend requests.");
         return true;
     }
 }

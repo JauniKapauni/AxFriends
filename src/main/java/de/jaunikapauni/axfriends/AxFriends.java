@@ -1,8 +1,6 @@
 package de.jaunikapauni.axfriends;
 
-import de.jaunikapauni.axfriends.command.AddFriendCommand;
-import de.jaunikapauni.axfriends.command.ListFriendsCommand;
-import de.jaunikapauni.axfriends.command.RemoveFriendCommand;
+import de.jaunikapauni.axfriends.command.*;
 import de.jaunikapauni.axfriends.manager.DatabaseManager;
 import de.jaunikapauni.axfriends.manager.PlayerManager;
 import org.bukkit.Bukkit;
@@ -35,6 +33,8 @@ public final class AxFriends extends JavaPlugin {
         getCommand("addfriend").setExecutor(new AddFriendCommand(this));
         getCommand("listfriends").setExecutor(new ListFriendsCommand(this));
         getCommand("removefriend").setExecutor(new RemoveFriendCommand(this));
+        getCommand("acceptfriendrequest").setExecutor(new AcceptFriendRequestCommand(this));
+        getCommand("denyfriendrequest").setExecutor(new DenyFriendRequestCommand(this));
     }
 
     @Override
