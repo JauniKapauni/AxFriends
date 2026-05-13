@@ -9,3 +9,11 @@ load: POSTWORLD
 
 authors: [ JauniKapauni ]
 website: https://github.com/JauniKapauni
+
+commands:
+  addfriend:
+    usage: /addfriend
+    description: Command to add a player as a friend
+  listfriends:
+    usage: /listfriends
+    description: Command to see a list of all friends

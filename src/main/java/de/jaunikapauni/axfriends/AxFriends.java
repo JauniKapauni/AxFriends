@@ -1,6 +1,9 @@
 package de.jaunikapauni.axfriends;
 
+import de.jaunikapauni.axfriends.command.AddFriendCommand;
+import de.jaunikapauni.axfriends.command.ListFriendsCommand;
 import de.jaunikapauni.axfriends.manager.DatabaseManager;
+import de.jaunikapauni.axfriends.manager.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -9,6 +12,10 @@ public final class AxFriends extends JavaPlugin {
     public DatabaseManager getDatabaseManager(){
         return databaseManager;
     }
+    PlayerManager playerManager;
+    public PlayerManager getPlayerManager(){
+        return playerManager;
+    }
 
     @Override
     public void onEnable() {
@@ -16,6 +23,7 @@ public final class AxFriends extends JavaPlugin {
         saveDefaultConfig();
         try{
             databaseManager = new DatabaseManager(this);
+            playerManager = new PlayerManager(this);
             if(databaseManager.initDatabaseTable1() && databaseManager.initDatabaseTable2() == false){
                 getLogger().severe("Error creating tables!");
                 Bukkit.getServer().shutdown();
@@ -23,6 +31,8 @@ public final class AxFriends extends JavaPlugin {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        getCommand("addfriend").setExecutor(new AddFriendCommand(this));
+        getCommand("listfriends").setExecutor(new ListFriendsCommand(this));
     }
 
     @Override
