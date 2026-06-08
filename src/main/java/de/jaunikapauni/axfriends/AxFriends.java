@@ -33,6 +33,7 @@ public final class AxFriends extends JavaPlugin {
         getCommand("addfriend").setExecutor(new AddFriendCommand(this));
         getCommand("listfriends").setExecutor(new ListFriendsCommand(this));
         getCommand("removefriend").setExecutor(new RemoveFriendCommand(this));
+        getCommand("removefriend").setTabCompleter(new RemoveFriendTabCompleter(this));
         getCommand("acceptfriendrequest").setExecutor(new AcceptFriendRequestCommand(this));
         getCommand("denyfriendrequest").setExecutor(new DenyFriendRequestCommand(this));
     }
