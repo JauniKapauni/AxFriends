@@ -20,6 +20,10 @@ public class AddFriendCommand implements CommandExecutor {
             return false;
         }
         Player sourcePlayer = (Player) sender;
+        if(!sourcePlayer.hasPermission("axfriends.addfriend")){
+            sourcePlayer.sendMessage("You don't have the permission! [axfriends.addfriend]");
+            return true;
+        }
         Player targetPlayer = Bukkit.getPlayer(args[0]);
         boolean state = reference.getPlayerManager().addFriend(sourcePlayer, targetPlayer);
         if(state){

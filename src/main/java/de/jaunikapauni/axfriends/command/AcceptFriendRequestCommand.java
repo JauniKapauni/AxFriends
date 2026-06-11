@@ -20,6 +20,10 @@ public class AcceptFriendRequestCommand implements CommandExecutor {
             return true;
         }
         Player sourcePlayer = (Player) sender;
+        if(!sourcePlayer.hasPermission("axfriends.acceptfriendrequest")){
+            sourcePlayer.sendMessage("You don't have the permission! [axfriends.acceptfriendrequest]");
+            return true;
+        }
         Player targetPlayer = Bukkit.getPlayer(args[0]);
         boolean state = reference.getPlayerManager().acceptFriendRequest(sourcePlayer, targetPlayer);
         if(state){
