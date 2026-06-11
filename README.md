@@ -27,6 +27,12 @@ database:
   password:
 ```
 ---
+## Commands & Permissions
+- `/acceptfriendrequest` - `axfriends.acceptfriendrequest`
+- `/addfriend` - `axfriends.addfriend`
+- `/denyfriendrequest` - `axfriends.denyfriendrequest`
+- `/listfriends` - `axfriends.listfriends`
+- `/removefriend` - `axfriends.removefriend`
 ## Support
 
 Discord: [AxForge](https://discord.gg/rYSxV4daS8)
