@@ -27,7 +27,7 @@ public class AcceptFriendRequestCommand implements CommandExecutor {
         Player targetPlayer = Bukkit.getPlayer(args[0]);
         boolean state = reference.getPlayerManager().acceptFriendRequest(sourcePlayer, targetPlayer);
         if(state){
-            targetPlayer.sendMessage(sourcePlayer.getName() + "has accept your friend request!");
+            targetPlayer.sendMessage(sourcePlayer.getName() + " has accept your friend request!");
             sourcePlayer.sendMessage("You accepted the friend request from " + targetPlayer.getName());
             return true;
         }
