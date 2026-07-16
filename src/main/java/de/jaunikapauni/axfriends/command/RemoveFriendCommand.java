@@ -25,6 +25,9 @@ public class RemoveFriendCommand implements CommandExecutor {
             sourcePlayer.sendMessage("You don't have the permission! [axfriends.removefriend]");
             return true;
         }
+        if(args.length != 1){
+            return false;
+        }
         Player targetPlayer = Bukkit.getPlayer(args[0]);
         boolean state = reference.getPlayerManager().removeFriend(sourcePlayer, targetPlayer);
         if(state){

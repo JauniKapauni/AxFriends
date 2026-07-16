@@ -26,6 +26,9 @@ public class DenyFriendRequestCommand implements CommandExecutor {
             sourcePlayer.sendMessage("You don't have the permission! [axfriends.denyfriendrequest]");
             return true;
         }
+        if(args.length != 1){
+            return false;
+        }
         Player targetPlayer = Bukkit.getPlayer(args[0]);
         boolean state = false;
         try {
