@@ -18,8 +18,12 @@ public class RemoveFriendTabCompleter implements TabCompleter {
     }
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+        if(!(sender instanceof Player)){
+            return List.of();
+        }
+        Player p = (Player) sender;
         if(args.length == 1){
-            return reference.getPlayerManager().listFriends((Player) sender);
+            return reference.getPlayerManager().listFriends(p);
         }
         return List.of();
     }
