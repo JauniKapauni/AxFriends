@@ -25,6 +25,7 @@ public class PlayerManager {
                 return true;
             }
         } catch (SQLException e) {
+            reference.getLogger().warning(e.getMessage());
             return false;
         }
     }
