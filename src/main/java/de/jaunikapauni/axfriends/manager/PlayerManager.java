@@ -51,10 +51,13 @@ public class PlayerManager {
             try(PreparedStatement ps = conn.prepareStatement("DELETE FROM friends WHERE player_one = ? AND player_two = ?")){
                 ps.setString(1, sourcePlayer.getUniqueId().toString());
                 ps.setString(2, targetPlayer.getUniqueId().toString());
-                ps.executeUpdate();
+                int deleted = ps.executeUpdate();
                 ps.setString(1, targetPlayer.getUniqueId().toString());
                 ps.setString(2, sourcePlayer.getUniqueId().toString());
                 ps.executeUpdate();
+                if(deleted == 0){
+                    return false;
+                }
                 return true;
             }
         } catch (SQLException e) {
