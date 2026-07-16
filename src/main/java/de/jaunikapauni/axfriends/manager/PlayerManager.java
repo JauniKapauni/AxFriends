@@ -91,8 +91,8 @@ public class PlayerManager {
             try(PreparedStatement ps = conn.prepareStatement("DELETE FROM friend_requests WHERE sender = ? AND receiver = ?")){
                 ps.setString(1, targetPlayer.getUniqueId().toString());
                 ps.setString(2, sourcePlayer.getUniqueId().toString());
-                ps.executeUpdate();
-                return true;
+                int deleted = ps.executeUpdate();
+                return deleted > 0;
             }
         }
     }
