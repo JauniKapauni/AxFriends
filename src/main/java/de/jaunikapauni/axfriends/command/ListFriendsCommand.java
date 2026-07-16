@@ -22,11 +22,11 @@ public class ListFriendsCommand implements CommandExecutor {
             return false;
         }
         Player sourcePlayer = (Player) sender;
-        sourcePlayer.sendMessage("Your friends:");
         if(!sourcePlayer.hasPermission("axfriends.listfriends")){
             sourcePlayer.sendMessage("You don't have the permission! [axfriends.listfriends]");
             return true;
         }
+        sourcePlayer.sendMessage("Your friends:");
         for(String uuid : reference.getPlayerManager().listFriends(sourcePlayer)){
             sourcePlayer.sendMessage("- " + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName());
         }
