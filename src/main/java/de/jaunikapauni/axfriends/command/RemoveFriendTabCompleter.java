@@ -26,7 +26,7 @@ public class RemoveFriendTabCompleter implements TabCompleter {
         if (!(sender instanceof Player)) {
             return List.of();
         }
-        if (args.length == 1) {
+        if (args.length != 1) {
             return List.of();
         }
         List<String> playerNames = new ArrayList<>();
