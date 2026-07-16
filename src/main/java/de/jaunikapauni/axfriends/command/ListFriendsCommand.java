@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ListFriendsCommand implements CommandExecutor {
@@ -29,16 +30,17 @@ public class ListFriendsCommand implements CommandExecutor {
         }
         sourcePlayer.sendMessage("Your friends:");
         Bukkit.getScheduler().runTaskAsynchronously(reference, () -> {
-            for(String uuid : reference.getPlayerManager().listFriends(sourcePlayer)){
-                Bukkit.getScheduler().runTask(reference, () -> {
+            List<String> friends = reference.getPlayerManager().listFriends(sourcePlayer);
+            Bukkit.getScheduler().runTask(reference, () -> {
+                for(String uuid : friends){
                     OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
                     String name = player.getName();
                     if(name == null){
                         name = uuid;
                     }
                     sourcePlayer.sendMessage("- " + name);
-                });
-            }
+                }
+            });
         });
         return true;
     }
