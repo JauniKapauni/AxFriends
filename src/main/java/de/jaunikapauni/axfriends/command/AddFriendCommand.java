@@ -32,6 +32,10 @@ public class AddFriendCommand implements CommandExecutor {
             sourcePlayer.sendMessage("Player is not online");
             return true;
         }
+        if(sourcePlayer.equals(targetPlayer)){
+            sourcePlayer.sendMessage("You can't add yourself!");
+            return true;
+        }
         boolean state = reference.getPlayerManager().addFriend(sourcePlayer, targetPlayer);
         if(state){
             sourcePlayer.sendMessage("You have sent " + targetPlayer.getName() + " a request to be your friend!");
