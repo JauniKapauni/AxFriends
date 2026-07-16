@@ -29,6 +29,10 @@ public class RemoveFriendCommand implements CommandExecutor {
             return false;
         }
         Player targetPlayer = Bukkit.getPlayer(args[0]);
+        if(targetPlayer == null){
+            sourcePlayer.sendMessage("Player is not online");
+            return true;
+        }
         boolean state = reference.getPlayerManager().removeFriend(sourcePlayer, targetPlayer);
         if(state){
             sourcePlayer.sendMessage("You are not longer friends with " + targetPlayer.getName());

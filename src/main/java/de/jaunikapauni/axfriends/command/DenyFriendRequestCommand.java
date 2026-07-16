@@ -30,6 +30,10 @@ public class DenyFriendRequestCommand implements CommandExecutor {
             return false;
         }
         Player targetPlayer = Bukkit.getPlayer(args[0]);
+        if(targetPlayer == null){
+            sourcePlayer.sendMessage("Player is not online");
+            return true;
+        }
         boolean state = false;
         try {
             state = reference.getPlayerManager().denyFriendRequest(sourcePlayer, targetPlayer);

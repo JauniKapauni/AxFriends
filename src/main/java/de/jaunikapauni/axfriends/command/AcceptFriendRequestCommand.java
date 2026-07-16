@@ -28,6 +28,10 @@ public class AcceptFriendRequestCommand implements CommandExecutor {
             return false;
         }
         Player targetPlayer = Bukkit.getPlayer(args[0]);
+        if(targetPlayer == null){
+            sourcePlayer.sendMessage("Player is not online");
+            return true;
+        }
         boolean state = reference.getPlayerManager().acceptFriendRequest(sourcePlayer, targetPlayer);
         if(state){
             targetPlayer.sendMessage(sourcePlayer.getName() + " has accept your friend request!");
