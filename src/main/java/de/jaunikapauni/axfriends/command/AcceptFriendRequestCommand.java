@@ -32,13 +32,17 @@ public class AcceptFriendRequestCommand implements CommandExecutor {
             sourcePlayer.sendMessage("Player is not online");
             return true;
         }
-        boolean state = reference.getPlayerManager().acceptFriendRequest(sourcePlayer, targetPlayer);
-        if(state){
-            targetPlayer.sendMessage(sourcePlayer.getName() + " has accept your friend request!");
-            sourcePlayer.sendMessage("You accepted the friend request from " + targetPlayer.getName());
-            return true;
-        }
-        sourcePlayer.sendMessage("There are no pending friend requests.");
+        Bukkit.getScheduler().runTaskAsynchronously(reference, () -> {
+            boolean state = reference.getPlayerManager().acceptFriendRequest(sourcePlayer, targetPlayer);
+            Bukkit.getScheduler().runTask(reference, () -> {
+                if(state){
+                    targetPlayer.sendMessage(sourcePlayer.getName() + " has accept your friend request!");
+                    sourcePlayer.sendMessage("You accepted the friend request from " + targetPlayer.getName());
+                } else {
+                    sourcePlayer.sendMessage("There are no pending friend requests.");
+                }
+            });
+        });
         return true;
     }
 }

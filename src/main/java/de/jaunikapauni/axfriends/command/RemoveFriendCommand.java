@@ -33,13 +33,17 @@ public class RemoveFriendCommand implements CommandExecutor {
             sourcePlayer.sendMessage("Player is not online");
             return true;
         }
-        boolean state = reference.getPlayerManager().removeFriend(sourcePlayer, targetPlayer);
-        if(state){
-            sourcePlayer.sendMessage("You are not longer friends with " + targetPlayer.getName());
-            targetPlayer.sendMessage(sourcePlayer.getName() + " removed you as a friend!");
-            return true;
-        }
-        sourcePlayer.sendMessage("You are not friends with " + targetPlayer.getName());
+        Bukkit.getScheduler().runTaskAsynchronously(reference, () -> {
+            boolean state = reference.getPlayerManager().removeFriend(sourcePlayer, targetPlayer);
+            Bukkit.getScheduler().runTask(reference, () -> {
+                if(state){
+                    sourcePlayer.sendMessage("You are not longer friends with " + targetPlayer.getName());
+                    targetPlayer.sendMessage(sourcePlayer.getName() + " removed you as a friend!");
+                } else {
+                    sourcePlayer.sendMessage("You are not friends with " + targetPlayer.getName());
+                }
+            });
+        });
         return true;
     }
 }

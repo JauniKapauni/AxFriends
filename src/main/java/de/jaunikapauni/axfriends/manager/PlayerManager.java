@@ -86,7 +86,7 @@ public class PlayerManager {
         }
     }
 
-    public boolean denyFriendRequest(Player sourcePlayer, Player targetPlayer) throws SQLException {
+    public boolean denyFriendRequest(Player sourcePlayer, Player targetPlayer) {
         try(Connection conn = reference.getDatabaseManager().getConnection()){
             try(PreparedStatement ps = conn.prepareStatement("DELETE FROM friend_requests WHERE sender = ? AND receiver = ?")){
                 ps.setString(1, targetPlayer.getUniqueId().toString());
@@ -94,6 +94,8 @@ public class PlayerManager {
                 int deleted = ps.executeUpdate();
                 return deleted > 0;
             }
+        } catch (SQLException e){
+            throw new RuntimeException(e);
         }
     }
 }

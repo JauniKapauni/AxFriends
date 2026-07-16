@@ -28,14 +28,18 @@ public class ListFriendsCommand implements CommandExecutor {
             return true;
         }
         sourcePlayer.sendMessage("Your friends:");
-        for(String uuid : reference.getPlayerManager().listFriends(sourcePlayer)){
-            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-            String name = player.getName();
-            if(name == null){
-                name = uuid;
+        Bukkit.getScheduler().runTaskAsynchronously(reference, () -> {
+            for(String uuid : reference.getPlayerManager().listFriends(sourcePlayer)){
+                Bukkit.getScheduler().runTask(reference, () -> {
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                    String name = player.getName();
+                    if(name == null){
+                        name = uuid;
+                    }
+                    sourcePlayer.sendMessage("- " + name);
+                });
             }
-            sourcePlayer.sendMessage("- " + name);
-        }
+        });
         return true;
     }
 }

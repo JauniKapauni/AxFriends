@@ -36,13 +36,17 @@ public class AddFriendCommand implements CommandExecutor {
             sourcePlayer.sendMessage("You can't add yourself!");
             return true;
         }
-        boolean state = reference.getPlayerManager().addFriend(sourcePlayer, targetPlayer);
-        if(state){
-            sourcePlayer.sendMessage("You have sent " + targetPlayer.getName() + " a request to be your friend!");
-            targetPlayer.sendMessage("You got a friend request from " + sourcePlayer.getName());
-            return true;
-        }
-        sourcePlayer.sendMessage("You are already friends with " + targetPlayer.getName());
+        Bukkit.getScheduler().runTaskAsynchronously(reference, () -> {
+            boolean state = reference.getPlayerManager().addFriend(sourcePlayer, targetPlayer);
+            Bukkit.getScheduler().runTask(reference, () -> {
+                if(state){
+                    sourcePlayer.sendMessage("You have sent " + targetPlayer.getName() + " a request to be your friend!");
+                    targetPlayer.sendMessage("You got a friend request from " + sourcePlayer.getName());
+                } else {
+                    sourcePlayer.sendMessage("You are already friends with " + targetPlayer.getName());
+                }
+            });
+        });
         return true;
     }
 }

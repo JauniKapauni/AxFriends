@@ -34,18 +34,17 @@ public class DenyFriendRequestCommand implements CommandExecutor {
             sourcePlayer.sendMessage("Player is not online");
             return true;
         }
-        boolean state = false;
-        try {
-            state = reference.getPlayerManager().denyFriendRequest(sourcePlayer, targetPlayer);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if(state){
-            targetPlayer.sendMessage(sourcePlayer.getName() + " has denied your friend request!");
-            sourcePlayer.sendMessage("You denied the friend request from " + targetPlayer.getName());
-            return true;
-        }
-        sourcePlayer.sendMessage("There are no pending friend requests.");
+        Bukkit.getScheduler().runTaskAsynchronously(reference, () -> {
+            boolean state = reference.getPlayerManager().denyFriendRequest(sourcePlayer, targetPlayer);
+            Bukkit.getScheduler().runTask(reference, () -> {
+                if(state){
+                    targetPlayer.sendMessage(sourcePlayer.getName() + " has denied your friend request!");
+                    sourcePlayer.sendMessage("You denied the friend request from " + targetPlayer.getName());
+                } else {
+                    sourcePlayer.sendMessage("There are no pending friend requests.");
+                }
+            });
+        });
         return true;
     }
 }
