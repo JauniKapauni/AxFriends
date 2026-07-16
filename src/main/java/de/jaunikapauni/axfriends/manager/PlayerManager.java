@@ -25,7 +25,7 @@ public class PlayerManager {
                 return true;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
