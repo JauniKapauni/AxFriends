@@ -2,6 +2,7 @@ package de.jaunikapauni.axfriends.command;
 
 import de.jaunikapauni.axfriends.AxFriends;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,7 +29,12 @@ public class ListFriendsCommand implements CommandExecutor {
         }
         sourcePlayer.sendMessage("Your friends:");
         for(String uuid : reference.getPlayerManager().listFriends(sourcePlayer)){
-            sourcePlayer.sendMessage("- " + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName());
+            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+            String name = player.getName();
+            if(name == null){
+                name = uuid;
+            }
+            sourcePlayer.sendMessage("- " + name);
         }
         return true;
     }
