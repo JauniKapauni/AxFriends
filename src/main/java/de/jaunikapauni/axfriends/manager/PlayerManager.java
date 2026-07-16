@@ -70,7 +70,10 @@ public class PlayerManager {
             try(PreparedStatement ps1 = conn.prepareStatement("DELETE FROM friend_requests WHERE sender = ? AND receiver = ?")){
                 ps1.setString(1, targetPlayer.getUniqueId().toString());
                 ps1.setString(2, sourcePlayer.getUniqueId().toString());
-                ps1.executeUpdate();
+                int deleted = ps1.executeUpdate();
+                if(deleted == 0){
+                    return false;
+                }
                 try(PreparedStatement ps2 = conn.prepareStatement("INSERT INTO friends(player_one, player_two) VALUES (?, ?)")){
                     ps2.setString(1, targetPlayer.getUniqueId().toString());
                     ps2.setString(2, sourcePlayer.getUniqueId().toString());
