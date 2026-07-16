@@ -37,7 +37,7 @@ public class DatabaseManager {
 
     public boolean initDatabaseTable1(){
         try(Connection conn = getConnection()){
-            try(PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS friends (player_one VARCHAR(255), player_two VARCHAR(255), PRIMARY KEY (player_one, player_two))")){
+            try(PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS friends (player_one VARCHAR(36) NOT NULL, player_two VARCHAR(36) NOT NULL, PRIMARY KEY (player_one, player_two))")){
                 ps.executeUpdate();
                 return true;
             }
@@ -48,7 +48,7 @@ public class DatabaseManager {
 
     public boolean initDatabaseTable2(){
         try(Connection conn = getConnection()){
-            try(PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS friend_requests (sender VARCHAR(255), receiver VARCHAR(255), PRIMARY KEY (sender, receiver))")){
+            try(PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS friend_requests (sender VARCHAR(36) NOT NULL, receiver VARCHAR(36) NOT NULL, PRIMARY KEY (sender, receiver))")){
                 ps.executeUpdate();
                 return true;
             }
