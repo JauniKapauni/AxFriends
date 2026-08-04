@@ -1,1 +1,2 @@
 # AxFriends
+Minecraft Friend System
